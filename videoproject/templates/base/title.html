@@ -1,0 +1,8 @@
+<div class="d-flex flex-column flex-md-row align-items-center p-1 px-md-2 mb-6 bg-white border-bottom shadow-sm">
+  <h5 class="my-0 mr-md-auto font-weight-normal">AI Acacdemy</h5>
+
+  <nav class="my-2 my-md-0 mr-md-3">
+    <a class="p-2 text-dark">Welcome, {{request.user}}</a>
+  </nav>
+  <a id="signout" class="btn btn-outline-dark" style="padding:4px 15px;" href="{% url 'user:logout'%}">登出</a>
+</div>

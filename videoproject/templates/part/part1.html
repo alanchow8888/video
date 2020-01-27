@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    {% load staticfiles %}
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'libs/bookstrap/bootstrap.css' %}" rel="stylesheet">
+
+    <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
+    <link rel="shortcut icon" href="{% static 'imgs/AI_32px.ico' %}" />
+</head>
+
+<body>
+  {% include "base/title.html" %}
+  {% include "base/nav.html" %}
+
+  <div style="margin-left:50px;">
+    <h1>part 1</h1>
+    <h3>非常感谢你参加此次AI Acacdemy的测试</h3>
+    <h5>本测试收集的数据仅供课题研究使用，不会泄露任何资料</h5>
+    <br></br>
+    <h4>注意事项：</h4>
+    <h5>1.请使用ie, Safari之外的浏览器</h5>
+    <h5>2.在part2中,浏览器会向用户发出打开用户摄像头的请求，请点击允许</h5>
+    <h5>3.请认真观看视频，并回答视频中的问题</h5>
+  </div>
+
+  <button type="button" style="margin-left:50px;margin-top:20px;" class="btn btn-info" onclick="p2();">part 2</button>
+
+
+
+</body>
+
+  <script type="text/javascript">
+    function p2(){
+       window.location.href="/video/part2";
+    }
+  </script>
+
+</html>

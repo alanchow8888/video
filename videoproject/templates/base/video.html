@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    {% load staticfiles %}
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'libs/bookstrap/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/video.css' %}" rel="stylesheet">
+    <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
+    <link rel="shortcut icon" href="{% static 'imgs/AI_32px.ico' %}" />
+</head>
+
+<body>
+  {% include "base/title.html" %}
+
+  <div class="box">
+
+
+  	<div class="w1182 detail">
+  		<h2 class="erji_h2">{{content.video_list.title}}</h2>
+  		<div class="bfq">
+  			 <div class="video_d">
+  				<div class="video">
+  					<div class="video_flash">
+  						<div>
+
+                <video id="example" class="vjs-default-skin vjs-big-play-centered" controls preload="auto" width="812" height="517">
+                <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+                <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
+                <source src="http://vjs.zencdn.net/v/oceans.ogv" type="video/ogg">
+                <p class="vjs-no-js"> To view this video please enable JavaScript, and consider upgrading to a web browser</p>
+                </video>
+
+                <!--<video id="example" >
+                  <iframe width="812" height="517" src="{{content.video_list.address}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </video>
+              -->
+  					</div>
+  				</div>
+
+          <div class="about about_pa">
+            <div class="ph_div bb_d">
+              <h4 class="tj_h4">Recommend</h4>
+            </div>
+            <div class="about_d">
+              <ul class="about_list">
+                {% for item in content.video_set %}
+                <li>
+                     <p class="fl_img"><a href="{% url 'video:videolist'  forloop.counter %}"><img src="{% static 'imgs/bg3.jpg' %}"></a></p>
+                     <div class="fr_img">
+                         <div class="txt_h_d">
+                             <p class="biaoti"><a href="{% url 'video:videolist'  forloop.counter %}">{{item.title}}</a></p>
+                         </div>
+                     </div>
+                 </li>
+                 {% endfor %}
+              </ul>
+            </div>
+          </div>
+  			</div>
+      </div>
+    </div>
+
+
+
+
+
+    </div>
+  </div>
+
+  <div align=center>
+    <video style="display:none;" id="video" width="480" height="480" controls>
+    </video>
+    <a id="result">Result:</a>
+    <canvas style="display:none;" id="canvas" width="480" height="480"></canvas>
+  </div>
+
+</body>
+
+
+
+<script>
+    //media
+    function getUserMedia(constraints, success, error) {
+      if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);
+      } else if (navigator.webkitGetUserMedia) {
+        navigator.webkitGetUserMedia(constraints,success, error)
+      } else if (navigator.mozGetUserMedia) {
+        navigator.mozGetUserMedia(constraints, success, error);
+      } else if (navigator.getUserMedia) {
+        navigator.getUserMedia(constraints, success, error);
+      }
+    }
+    let video = document.getElementById('video');
+    let canvas = document.getElementById('canvas');
+    let context = canvas.getContext('2d');
+
+    function success(stream) {
+      let CompatibleURL = window.URL || window.webkitURL;
+      console.log(stream);
+      video.srcObject = stream;
+      video.play();
+    }
+    function error(error) {
+      console.log(`error${error.name}, ${error.message}`);
+    }
+    if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
+      getUserMedia({video : {width: 480, height: 480}}, success, error);
+    } else {
+        alert('no allow');
+        //no allow
+    }
+    // https://blog.csdn.net/bluelotos893/article/details/89191535
+    //var canvas_capture = document.createElement("canvas");
+      function playvideo(){
+            var i = window.setInterval(function () {
+                context.drawImage(video, 0, 0, 480, 480);
+                var canvasElement = document.getElementById('canvas');
+                var MIME_TYPE = "image/png";
+                var imgURL = canvasElement.toDataURL(MIME_TYPE).substring(22);;
+                var	timeDisplay = Math.floor(v.currentTime);
+                imgData = {uploadImg:imgURL,videotime:timeDisplay};
+                var senddata = JSON.stringify(imgData);
+                $.ajax({
+                        url: "/video/record",
+                        type: "post",
+                        data: senddata,
+                        success: function (data) {
+                          var jsonData = JSON.parse(data);
+                          document.getElementById('result').innerHTML="Result:".concat(jsonData.data);
+                        },
+                    });
+                if(v.ended || v.paused){
+                    v.removeEventListener("play",playvideo);
+                    clearInterval(i);
+                    v.addEventListener("play",playvideo);
+                    if(v.ended)
+                    {
+                        // window.open( '/quiz/', "n1","status=1, height:100, width:90, toolbar=0, resizeable=0");
+                    }
+                }
+        }, 500)
+    }
+    var v = document.getElementById('example');
+    v.addEventListener("play",playvideo);
+
+
+
+  </script>
+
+
+
+
+</html>

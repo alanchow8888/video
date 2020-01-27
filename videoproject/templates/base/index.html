@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Login</title>
+    {% load staticfiles %}
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'libs/bookstrap/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+    <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="shortcut icon" href="{% static 'imgs/AI_32px.ico' %}" />
+    <style>
+      * {
+        border-radius: 0 !important;
+      }
+      html, body {
+        height: 100%;
+      }
+      .form{background: rgba(255,255,255,0.2);width:360px;height:290px;margin:21% auto;}
+      body {
+        background-color: #3398eb;
+      }
+
+      #fold {
+        background-size: cover;
+        background: #3398eb no-repeat center center;
+        min-height: 100%;
+      }
+
+      #fold a.navbar-brand {
+        color: white;
+        line-height: 60px;
+        font-size: 2.5rem;
+      }
+
+    </style>
+
+</head>
+  <body>
+    <section id="fold">
+        <div class="container py-sm-4" style="margin-left:15px">
+          <a class="navbar-brand" href="/">
+            AI Academy
+          </a>
+        </div>
+        <div class="container">
+          <div class="row align-items-center"  style="margin-left:160%">
+            <div class="mb-3">
+                  <div class="form row">
+                      <div class="col-md mb-2">
+                          <h1 class="form-title text-center mb-0" style="font-size:38px;color: white;margin-top:13px">登陆</h1>
+                          <div class="col-md-12">
+                            <form  id="login_form" class="" novalidate method="post" action="{% url 'user:login' %}" enctype="multipart/form-data">
+
+                              <div class="input">
+                                  <i class="fa fa-user fa-lg"></i>
+                                  <input class="form-control required" value="{{content.username}}" type="account"  placeholder="账号" id="username" name="username" maxlength="20"/>
+                              </div>
+                              <div class="password mb-3">
+                                      <i class="fa fa-lock fa-lg"></i>
+                                      <input class="form-control required" type="password" placeholder="密码" id="password" name="password" maxlength="18"/>
+                              </div>
+                              <div class="form-group mb-2">
+                                  <label class="checkbox  mb-1">
+                                      <input type="checkbox" name="remember" id="remember" value="1"/>记住账号
+                                  </label>
+                              </div>
+                              <div  class="form-group text-center"  >
+                                  {% include "base/error.html" %}
+                                  <button type="submit"  style="padding:15px 40px;" class=" ui teal  button" name="submit">登陆</button>
+                              </div>
+                            </form>
+                          </div>
+                      </div>
+                  </div>
+          </div>
+
+
+        </div>
+      </div>
+    </section>
+  </body>
+  </html>

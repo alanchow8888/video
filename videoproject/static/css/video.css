@@ -1,0 +1,17 @@
+blockquote, body, button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, hr, input, legend, li, ol, p, pre, td, textarea, th, ul {margin: 0; padding: 0; }
+a{text-decoration: none;color: #2c2829}
+.w1182{width: 1182px;margin:0 auto;}
+.fl_img img{width: 149px;height: 75px}
+.erji_h2{font-size: 30px;line-height: 50px;padding:15px 20px;overflow: hidden;font-weight: normal;text-indent:25px;}
+.tj_h4{font-size: 20px;border-top: 2px solid #f57365;color: #f57365;line-height: 33px; border-bottom:1px solid #dcdcdc;margin-bottom: 5px;text-indent: 10px}
+.video_div .video{ width:100%;}
+.big_v .video{ width:100%}
+.video_d{ position:relative}
+.about{  background:#fff; }
+.about_pa{position:absolute; top:0; right:0px;width: 359px;height: 517px; overflow:hidden;}
+.about_pa .about_list{ height:517px; overflow-y:scroll; }
+.about_list li{ height:85px; padding:5px 0 5px 0px; border-bottom:1px solid #dcdcdc}
+.about_list .fl_img{float: left;}
+.about_list .fr_img{ float:right;  width:180px;}
+.txt_h_d{height: 40px;overflow: hidden;padding:20px 0 0;}
+.detail{padding-bottom: 10px}
