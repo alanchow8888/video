@@ -171,7 +171,7 @@ function playvideo(){
                   },
               });
 
-          if(v.paused){//|| v.paused
+          if(v.paused && flag_1!=0 && flag_2!=0 && flag_3!=0  && flag_4!=0 && flag_5!=0 && flag_6!=0 && flag_7!=0 && flag_8!=0 && flag_9!=0 && flag_10!=0){//|| v.paused
             v.removeEventListener("play",playvideo);
             clearInterval(i);
             v.addEventListener("play",playvideo);
@@ -182,7 +182,7 @@ function playvideo(){
             v.removeEventListener("play",playvideo);
             clearInterval(i);
             v.addEventListener("play",playvideo);
-            window.location.href="/video/part4";
+            window.location.href="/video/part3";
           }
 
 
@@ -195,10 +195,10 @@ function playvideo(){
           if(timeDisplay!=182){
               flag_3 = 0;
           }
-          if(timeDisplay!=262){
+          if(timeDisplay!=261){
               flag_4 = 0;
           }
-          if(timeDisplay!=344){
+          if(timeDisplay!=345){
               flag_5 = 0;
           }
           if(timeDisplay!=417){
@@ -296,7 +296,7 @@ function playvideo(){
 
 
 
-          if(timeDisplay == 262 && flag_4 == 0){
+          if(timeDisplay == 261 && flag_4 == 0){
             v.pause();
             flag_4= 1;
             content =""
@@ -319,7 +319,7 @@ function playvideo(){
             })
           }
 
-          if(timeDisplay == 344 && flag_5 == 0){
+          if(timeDisplay == 345 && flag_5 == 0){
             v.pause();
             flag_5= 1;
             content =""
@@ -403,7 +403,7 @@ function playvideo(){
             + "<div><button type='button' id='D' style='width:130px;' class='btn btn-info mb-3' onclick='answer(8,4);'>D. d</button></div>"
             + "</table></div>"
             Swal.fire({
-                title: '<strong>Question 10</strong>',
+                title: '<strong>Question 8</strong>',
                 type: 'info',
                 html: content, // HTML
                 showConfirmButton: false,
