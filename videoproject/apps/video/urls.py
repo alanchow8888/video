@@ -10,5 +10,5 @@ urlpatterns = [
     #path('test', IndexView.as_view(), name='IndexView'),
     path('record', record, name='record'),
     path('part<int:page_id>', partlist.as_view(), name='partlist'),
-
+    path('calibration', calibration, name='calibration'),
 ]

@@ -9,20 +9,24 @@
     <link href="{% static 'libs/bookstrap/bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'css/signin.css' %}" rel="stylesheet">
     <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
-    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/semantic-ui/2.4.1/semantic.min.css">
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/semantic.min.css' %}" rel="stylesheet">
     <link rel="shortcut icon" href="{% static 'imgs/AI_32px.ico' %}" />
     <style>
-      * {
-        border-radius: 0 !important;
-      }
+
       html, body {
         height: 100%;
       }
-      .form{background: rgba(255,255,255,0.2);width:360px;height:290px;margin:21% auto;}
+      .form{background: rgba(255,255,255,0.2);width:330px;height:290px;margin-left: 50%;}
       body {
+        display: -ms-flexbox;
+        display: flex;
+        padding-top: 0px;
+        padding-bottom: 10px;
         background-color: #3398eb;
       }
+
+      .fa{top: 25px;left: 12px;color: #ccc;}
 
       #fold {
         background-size: cover;
@@ -32,7 +36,7 @@
 
       #fold a.navbar-brand {
         color: white;
-        line-height: 60px;
+        line-height: 20px;
         font-size: 2.5rem;
       }
 
@@ -41,46 +45,93 @@
 </head>
   <body>
     <section id="fold">
-        <div class="container py-sm-4" style="margin-left:15px">
+        <div class=" py-sm-4" style="margin-left:5%">
+          <div>
+            <a class="navbar-brand" href="/">
+              人工智能学院
+            </a>
+        </div>
+        <div>
           <a class="navbar-brand" href="/">
             AI Academy
           </a>
-        </div>
-        <div class="container">
-          <div class="row align-items-center"  style="margin-left:160%">
-            <div class="mb-3">
-                  <div class="form row">
-                      <div class="col-md mb-2">
-                          <h1 class="form-title text-center mb-0" style="font-size:38px;color: white;margin-top:13px">登陆</h1>
-                          <div class="col-md-12">
-                            <form  id="login_form" class="" novalidate method="post" action="{% url 'user:login' %}" enctype="multipart/form-data">
-
-                              <div class="input">
-                                  <i class="fa fa-user fa-lg"></i>
-                                  <input class="form-control required" value="{{content.username}}" type="account"  placeholder="账号" id="username" name="username" maxlength="20"/>
-                              </div>
-                              <div class="password mb-3">
-                                      <i class="fa fa-lock fa-lg"></i>
-                                      <input class="form-control required" type="password" placeholder="密码" id="password" name="password" maxlength="18"/>
-                              </div>
-                              <div class="form-group mb-2">
-                                  <label class="checkbox  mb-1">
-                                      <input type="checkbox" name="remember" id="remember" value="1"/>记住账号
-                                  </label>
-                              </div>
-                              <div  class="form-group text-center"  >
-                                  {% include "base/error.html" %}
-                                  <button type="submit"  style="padding:15px 40px;" class=" ui teal  button" name="submit">登陆</button>
-                              </div>
-                            </form>
-                          </div>
-                      </div>
-                  </div>
-          </div>
-
-
-        </div>
+       </div>
       </div>
+
+      <div class="d-flex mb-3">
+         <div class="p-2">
+        <div class="form col-md">
+          <h1 class="text-center" style="font-size:38px;color: white;margin-top:25px">登陆</h1>
+          <form  id="login_form" class="" novalidate method="post" action="{% url 'user:login' %}" enctype="multipart/form-data">
+            <div class="input">
+                <i class="fa fa-user fa-lg"></i>
+                <input class="form-control required" value="{{content.username}}" type="account"  placeholder="账号" id="username" name="username" maxlength="20"/>
+            </div>
+            <div class="password mb-2">
+                    <i class="fa fa-lock fa-lg"></i>
+                    <input class="form-control required" value="{{content.rememberpsw}}" type="password" placeholder="密码" id="password" name="password" maxlength="18"/>
+            </div>
+            <div class="form-group mb-2">
+                <label class="checkbox  mb-1">
+                    <input type="checkbox" name="remember" id="remember" value="1"/>记住账号
+                </label>
+                <label class="checkbox  mb-1">
+                    <input type="checkbox" name="rememberpsw" id="rememberpsw" value="1"/>记住密码
+                </label>
+            </div>
+            <div  class="form-group text-center"  >
+                {% include "base/error.html" %}
+                <button type="submit"  style="padding:15px 40px;" class=" ui teal  button" name="submit">登陆</button>
+            </div>
+          </form>
+          </div>
+        </div>
+
+        <div class="p-2" style="margin-left:230px;margin-top:60px;" >
+          <div>
+            <a style="font-size:27px;color: white;">非常感谢你参加此次AI Acacdemy的测试</a>
+          </div>
+          <div style="margin-top:5px">
+            <a style="font-size:27px;color: white;">请开始前先阅读下面说明:</a>
+          </div>
+          <div style="margin-top:20px">
+            <a style="font-size:27px;color: white;">本次测试共需10-18分钟完成</a>
+          </div>
+          <div style="margin-top:5px">
+            <a style="font-size:27px;color: white;">本测试收集的数据并不会牵涉个人私隐</a>
+          </div>
+          <div  style="margin-top:20px">
+            <a style="font-size:27px;color: white;">注意事项:</a>
+          </div>
+          <div style="margin-top:5px">
+            <a style="font-size:27px;color: white;">1.请使用Chrome, Sogo, QQ及360等浏览器, 不要使用IE，Safari及Firefox</a>
+          </div>
+          <div style="margin-top:5px">
+            <a style="font-size:27px;color: white;">2.请确定使用的计算机必须要配备视像头, 否则未能完成我们的测试</a>
+          </div>
+          <div style="margin-top:5px">
+            <a style="font-size:27px;color: white;">3.浏览器会向用户发出打开用户摄像头的请求，请点击允许</a>
+            <div  style="margin-top:5px">
+              <img src="{% static '/imgs/ca.jpg'%}"  />
+            </div>
+          </div>
+          <div style="margin-top:5px">
+            <a style="font-size:27px;color: white;">4.在测试的过程中如有任何问题, 请扫瞄下面二维码和Alan Chow/ Chris Man 联系</a>
+            <div  style="margin-top:5px">
+              <img src="{% static '/imgs/qrcode.jpg'%}"  />
+            </div>
+            <div><a style="color: white;">(二维码在2月17日到期)</a></div>
+          </div>
+        </div>
+
+      </div>
+
+
+
     </section>
+
+
+
+
   </body>
   </html>

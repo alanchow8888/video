@@ -6,7 +6,8 @@
     {% load staticfiles %}
     <!-- Bootstrap core CSS -->
     <link href="{% static 'libs/bookstrap/bootstrap.css' %}" rel="stylesheet">
-
+    <script src="{% static 'libs/sweetalert/sweetalert.min.js' %}"></script>
+    <script src="{% static 'libs/sweetalert/sweetalert.js' %}"></script>
     <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
     <link rel="shortcut icon" href="{% static 'imgs/AI_32px.ico' %}" />
 </head>
@@ -14,28 +15,148 @@
 <body>
   {% include "base/title.html" %}
   {% include "base/nav.html" %}
+  <h3 style="margin-top:20px;margin-left:50px;">第一部分 测试前准备</h3>
+  <div class="d-flex mb-3">
+    <div class="p-2" style="margin-left:100px;margin-top:60px" >
+      <h5>请校准计算机的视像头并清楚看到自己的头像</h5>
+      <div>
+        <button  type="button" style="margin-top:5px" class="btn btn-info" onclick="calibration();">校准</button>
+      </div>
+      <div id="ing" style="display:none;" >
+        <a style="margin-top:15px;font-size:20px;color: orange;" >校准中</a>
+      </div>
+      <div id="nopass" style="display:none;" >
+        <a style="margin-top:15px;font-size:20px;color: red;" >校准失败</a>
+      </div>
+      <h5 style="margin-top:45px;">若校准失败，请注意以下事项:</h5>
+      <h5>1.请尽量保持头像在光圈范围内</h5>
+      <h5>2.请确保成功打开摄像头</h5>
+      <h5>3.请确保光线充足明亮</h5>
+      <h5>4.请确保你在色彩单一的背景下进行测试</h5>
+    </div>
+     <div class="p-2">
+        <div style="margin-left:50px" >
+          <video style="display:none;" id="video" width="480" height="480" controls  ></video>
+          <canvas style="display:none;" id="canvas" width="480" height="480"></canvas>
+          <canvas style="background-color: black" id="canvas_1" width="480" height="480"></canvas>
+        </div>
+      </div>
 
-  <div style="margin-left:50px;">
-    <h1>part 1</h1>
-    <h3>非常感谢你参加此次AI Acacdemy的测试</h3>
-    <h5>本测试收集的数据仅供课题研究使用，不会泄露任何资料</h5>
-    <br></br>
-    <h4>注意事项：</h4>
-    <h5>1.请使用ie, Safari之外的浏览器</h5>
-    <h5>2.在part2中,浏览器会向用户发出打开用户摄像头的请求，请点击允许</h5>
-    <h5>3.请认真观看视频，并回答视频中的问题</h5>
   </div>
-
-  <button type="button" style="margin-left:50px;margin-top:20px;" class="btn btn-info" onclick="p2();">part 2</button>
 
 
 
 </body>
 
   <script type="text/javascript">
+  function getUserMedia(constraints, success, error) {
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);
+    } else if (navigator.webkitGetUserMedia) {
+      navigator.webkitGetUserMedia(constraints,success, error)
+    } else if (navigator.mozGetUserMedia) {
+      navigator.mozGetUserMedia(constraints, success, error);
+    } else if (navigator.getUserMedia) {
+      navigator.getUserMedia(constraints, success, error);
+    }
+  }
+  function success(stream) {
+    let CompatibleURL = window.URL || window.webkitURL;
+    console.log(stream);
+    video.srcObject = stream;
+    video.play();
+  }
+  function error(error) {
+    console.log(`error${error.name}, ${error.message}`);
+    alert("error");
+  }
+  if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
+    getUserMedia({video : {width: 480, height: 480}}, success, error);
+  } else {
+      alert('请允许打开摄像头');
+      //no allow
+  }
+  let video = document.getElementById('video');
+  let canvas = document.getElementById('canvas');
+  let context = canvas.getContext('2d');
+  let canvas_1 = document.getElementById('canvas_1');
+  let context_1 = canvas_1.getContext('2d');
+
+  function calibration(){
+    document.getElementById("nopass").style.display="none";
+    document.getElementById("ing").style.display="inline";
+    context.drawImage(video, 0, 0, 120, 120);
+    var canvasElement = document.getElementById('canvas');
+    var MIME_TYPE = "image/png";
+    var imgURL = canvasElement.toDataURL(MIME_TYPE,0.1).substring(22);
+    imgData = {uploadImg:imgURL};
+    var senddata = JSON.stringify(imgData);
+    $.ajax({
+            url: "/video/calibration",
+            type: "post",
+            data: senddata,
+            success: function (data) {
+             var jsonData = JSON.parse(data);
+             if(jsonData.data=='pass'){
+              document.getElementById("ing").style.display="none";
+              document.getElementById("nopass").style.display="none";
+               content =
+               "<button  type='button' style='margin-top:5px;' class='btn btn-info' onclick='p2();'>进入part 2</button>"
+               Swal.fire({
+                   title: '<strong>通过校准</strong>',
+                   type: 'info',
+                   html: content, // HTML
+                   showConfirmButton: false,
+                   showCloseButton: false,//右上角关闭
+                   focusClose: false,
+                   //allowOutsideClick :false,
+               })
+             }
+             else if (jsonData.data=='failure') {
+               document.getElementById("ing").style.display="none";
+               document.getElementById("nopass").style.display="inline";
+             }
+
+
+            },
+        });
+  }
+
     function p2(){
        window.location.href="/video/part2";
     }
+
+    function clearArc(x,y,radius){//圆心(x,y)，半径radius
+    				var calcWidth=radius-stepClear;
+    				var calcHeight=Math.sqrt(radius*radius-calcWidth*calcWidth);
+    				var posX=x-calcWidth;
+    				var posY=y-calcHeight;
+    				var widthX=2*calcWidth;
+    				var heightY=2*calcHeight;
+            context_1.clearRect(posX,posY,widthX,heightY);
+            clearArc(x,y,radius);
+
+    			}
+
+
+
+    window.onload = function(){
+      var i = window.setInterval(function () {
+        context_1.drawImage(video, 0, 0, 480, 480);
+        context_1.beginPath();
+        //context_1.globalAlpha=0.9;
+        context_1.fillStyle="white";
+        context_1.strokeStyle="white";
+        context_1.lineWidth=5;
+        context_1.arc(240, 240,220,Math.PI*2,0,true);
+        context_1.stroke();
+        context_1.closePath();
+        clearArc(240,240,220);
+        //ctx.globalCompositeOperation="lighter";
+        context_1.fill();
+      }, 10)
+    }
+
   </script>
 
 </html>

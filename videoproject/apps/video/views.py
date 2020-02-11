@@ -6,14 +6,19 @@ from django.shortcuts import get_object_or_404
 from django.views import generic
 from django.views.decorators.http import require_http_methods
 from video.models import Video,Video_user
+from django.http import HttpResponseRedirect
 from django.db.models import Max
 from quiz.models import Choice
 import json
 import base64
 import os
 import re
-
-
+import base64
+from io import BytesIO
+import cv2
+import numpy as np
+CASC_PATH = './apps/face/haarcascade_frontalface_default.xml'
+cascade_classifier = cv2.CascadeClassifier(CASC_PATH)
 class Index(View):
     def get(self, request):
         content={}
@@ -21,7 +26,12 @@ class Index(View):
             username = request.COOKIES['username']
         else:
             username = ''
+        if 'rememberpsw' in request.COOKIES:
+            rememberpsw = request.COOKIES['rememberpsw']
+        else:
+            rememberpsw = ''
         content['username'] = username
+        content['rememberpsw'] = rememberpsw
         return render_to_response("base/index.html",{'content': content})
 
 
@@ -44,6 +54,33 @@ class videolist(View):
 
         else:
             return redirect('/')
+
+def calibration(request):
+    if request.method == 'POST':
+        postBody = request.body
+        img = json.loads(postBody)['uploadImg']
+        byte_data = base64.b64decode(img)
+        img_array = np.fromstring(byte_data, np.uint8)
+        image = cv2.imdecode(img_array, cv2.COLOR_RGB2BGR)
+        faces = cascade_classifier.detectMultiScale(
+        image,
+        scaleFactor = 1.2,
+        minNeighbors = 5
+        )
+        print(faces)
+        if(faces==()):
+            content = '{"data":"failure"}'
+            return HttpResponse(content)
+        else:
+            content = '{"data":"pass"}'
+            return HttpResponse(content)
+        """
+        #import face_recognition
+        #image_data = BytesIO(byte_data)
+        #face = face_recognition.load_image_file(image_data)
+        #face_locations = face_recognition.face_locations(face)
+        """
+
 
 def record(request):
     if request.method == 'POST':

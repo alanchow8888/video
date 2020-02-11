@@ -1,13 +1,6 @@
 html,body {
   height: 100%;
 }
-body {
-  display: -ms-flexbox;
-  display: flex;
-  padding-top: 0px;
-  padding-bottom: 10px;
-
-}
 
 input[type="account"] {
   margin-bottom: -1px;
@@ -23,7 +16,5 @@ input[type="password"] {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-.form{background: rgba(255,255,255,0.2);width:360px;height:270px;margin:21% auto;}
 /*阴影*/
-.fa{display: inline-block;top: 25px;left: 16px;position: relative;color: #ccc;}
-.checkbox{padding-left:4%; font-weight: 400;}
+.checkbox{padding-left:4%; font-weight: 600px;}

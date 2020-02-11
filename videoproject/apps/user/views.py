@@ -11,17 +11,19 @@ def login(request):
         password = request.POST.get('password')
         username = request.POST.get('username')
         remember = request.POST.get('remember')
+        rememberpsw = request.POST.get('rememberpsw')
         print(username,password)
 
-        if(username=='' or password == ''):
+        if(username==''):
             return render(request, 'base/index.html', {'error': 0})
         else:
             user = authenticate(username=username, password=password)
             if user is not None:
                 response =  redirect('/video/part1')
                 if remember:
-                    response.set_cookie('username',username,max_age=7*24*3600)
-                print('ok')
+                    response.set_cookie('username',username,max_age=1*24*3600)
+                if rememberpsw:
+                    response.set_cookie('rememberpsw',password,max_age=1*24*3600)
                 auth_login(request, user)
                 return response
             else:

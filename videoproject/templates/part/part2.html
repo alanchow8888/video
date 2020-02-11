@@ -7,6 +7,7 @@
     <!-- Bootstrap core CSS -->
     <script src="{% static 'libs/sweetalert/sweetalert.min.js' %}"></script>
     <link href="{% static 'libs/bookstrap/bootstrap.css' %}" rel="stylesheet">
+    <script src="{% static 'libs/sweetalert/sweetalert.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <link href="{% static 'css/video.css' %}" rel="stylesheet">
     <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
@@ -64,7 +65,7 @@
         <div class="video">
           <div class="video_flash">
             <div>
-              <video id="example" class="vjs-default-skin vjs-big-play-centered"  controls preload="auto" width="930" height="537">
+              <video id="example" class="vjs-default-skin vjs-big-play-centered"  poster="{% static '/imgs/v1.JPG'%}" controls preload="auto" width="930" height="537">
                  <source src="{% static '/media/version1.mp4'%}"  type="video/mp4">
               <!--
               <source src="http://1257273252.vod2.myqcloud.com/cc6d9a86vodcq1257273252/5d2b40f55285890794396832134/CSbIIqDpZEwA.mp4"  type="video/mp4">>
@@ -129,7 +130,6 @@ let sym = 0;
 let timeDisplay = 0;
 
 function answer(question,answer){
-
   var answerdata = {question_id:question,answer:answer,video_times:video_times};
   var answerdata = JSON.stringify(answerdata);
   $.ajax({
@@ -143,13 +143,24 @@ function answer(question,answer){
       });
   Swal.close();
   flag_all=1;
-
   v.removeEventListener("play",playvideo);
-
   v.addEventListener("play",playvideo);
   v.play();
 
 }
+
+function clearArc(x,y,radius){//圆心(x,y)，半径radius
+        var calcWidth=radius-stepClear;
+        var calcHeight=Math.sqrt(radius*radius-calcWidth*calcWidth);
+        var posX=x-calcWidth;
+        var posY=y-calcHeight;
+        var widthX=2*calcWidth;
+        var heightY=2*calcHeight;
+        context_1.clearRect(posX,posY,widthX,heightY);
+        clearArc(x,y,radius);
+
+      }
+
 
 function playvideo(){
 
@@ -166,12 +177,13 @@ function playvideo(){
                   type: "post",
                   data: senddata,
                   success: function (data) {
-                  //  var jsonData = JSON.parse(data);
+                    //var jsonData = JSON.parse(data);
+                    //alert(jsonData);
                   //  document.getElementById('result').innerHTML="Result:".concat(jsonData.data);
                   },
               });
 
-          if(v.paused && flag_1!=0 && flag_2!=0 && flag_3!=0  && flag_4!=0 && flag_5!=0 && flag_6!=0 && flag_7!=0 && flag_8!=0 && flag_9!=0 && flag_10!=0){//|| v.paused
+          if(v.paused ){//|| v.paused
             v.removeEventListener("play",playvideo);
             clearInterval(i);
             v.addEventListener("play",playvideo);
@@ -195,7 +207,7 @@ function playvideo(){
           if(timeDisplay!=182){
               flag_3 = 0;
           }
-          if(timeDisplay!=261){
+          if(timeDisplay!=262){
               flag_4 = 0;
           }
           if(timeDisplay!=345){
@@ -210,7 +222,7 @@ function playvideo(){
           if(timeDisplay!=519){
               flag_8 = 0;
           }
-          if(timeDisplay!=587){
+          if(timeDisplay!=590){
               flag_9 = 0;
           }
           if(timeDisplay!=642){
@@ -296,7 +308,7 @@ function playvideo(){
 
 
 
-          if(timeDisplay == 261 && flag_4 == 0){
+          if(timeDisplay == 262 && flag_4 == 0){
             v.pause();
             flag_4= 1;
             content =""
@@ -416,7 +428,7 @@ function playvideo(){
 
 
 
-          if(timeDisplay == 587 && flag_9 == 0){
+          if(timeDisplay == 590 && flag_9 == 0){
             v.pause();
             flag_9= 1;
             content =""
@@ -473,10 +485,14 @@ window.onload = function(){
   var i = window.setInterval(function () {
     context_1.drawImage(video, 0, 0, 240, 240);
     context_1.beginPath();
-    context_1.globalAlpha=0.2;
+    //context_1.globalAlpha=0.9;
     context_1.fillStyle="white";
-    context_1.arc(120, 100,90,Math.PI*2,0,true);
+    context_1.strokeStyle="white";
+    context_1.lineWidth=3;
+    context_1.arc(120, 120,105,Math.PI*2,0,true);
+    context_1.stroke();
     context_1.closePath();
+    clearArc(120,120,100);
     //ctx.globalCompositeOperation="lighter";
     context_1.fill();
 
