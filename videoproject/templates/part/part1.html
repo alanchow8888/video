@@ -14,13 +14,13 @@
 
 <body>
   {% include "base/title.html" %}
-  {% include "base/nav.html" %}
+
   <h3 style="margin-top:20px;margin-left:50px;">第一部分 测试前准备</h3>
   <div class="d-flex mb-3">
     <div class="p-2" style="margin-left:100px;margin-top:60px" >
-      <h5>请校准计算机的视像头并清楚看到自己的头像</h5>
+      <h5 >请校准计算机的视像头并清楚看到自己的头像</h5>
       <div>
-        <button  type="button" style="margin-top:5px" class="btn btn-info" onclick="calibration();">校准</button>
+        <button  type="button" style="margin-top:5px" class="btn btn-info" onclick="calibration();">校准按键</button>
       </div>
       <div id="ing" style="display:none;" >
         <a style="margin-top:15px;font-size:20px;color: orange;" >校准中</a>
@@ -28,11 +28,13 @@
       <div id="nopass" style="display:none;" >
         <a style="margin-top:15px;font-size:20px;color: red;" >校准失败</a>
       </div>
-      <h5 style="margin-top:45px;">若校准失败，请注意以下事项:</h5>
-      <h5>1.请尽量保持头像在光圈范围内</h5>
-      <h5>2.请确保成功打开摄像头</h5>
-      <h5>3.请确保光线充足明亮</h5>
-      <h5>4.请确保你在色彩单一的背景下进行测试</h5>
+      <h5 style="margin-top:45px;">若校准失败，请确保:</h5>
+      <h5>1.头像在圆圈范围内</h5>
+      <h5>2.成功打开摄像头</h5>
+      <h5>3.光线充足明亮</h5>
+      <h5>4.在色彩单一的背景下进行测试</h5>
+      <h5>5.眼镜镜片不反光</h5>
+      <h5>6.正面面对镜头</h5>
     </div>
      <div class="p-2">
         <div style="margin-left:50px" >
@@ -82,6 +84,18 @@
   let canvas_1 = document.getElementById('canvas_1');
   let context_1 = canvas_1.getContext('2d');
 
+  // 设置cookie
+  function setCookie(name, value, seconds) {
+    seconds = seconds || 0;   //seconds有值就直接赋值，没有为0
+    var expires = "";
+    if (seconds != 0 ) {      //设置cookie生存时间
+      var date = new Date();
+      date.setTime(date.getTime()+(seconds*1000));
+      expires = "; expires="+date.toGMTString();
+    }
+    document.cookie = name+"="+escape(value)+expires+"; path=/";   //转码并赋值
+  }
+
   function calibration(){
     document.getElementById("nopass").style.display="none";
     document.getElementById("ing").style.display="inline";
@@ -98,6 +112,7 @@
             success: function (data) {
              var jsonData = JSON.parse(data);
              if(jsonData.data=='pass'){
+              setCookie('p2','1',10);
               document.getElementById("ing").style.display="none";
               document.getElementById("nopass").style.display="none";
                content =

@@ -8,86 +8,67 @@
     <script src="{% static 'libs/sweetalert/sweetalert.min.js' %}"></script>
     <link href="{% static 'libs/bookstrap/bootstrap.css' %}" rel="stylesheet">
     <script src="{% static 'libs/sweetalert/sweetalert.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <link href="{% static 'css/video.css' %}" rel="stylesheet">
     <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
     <link rel="shortcut icon" href="{% static 'imgs/AI_32px.ico' %}" />
 
     <style type="text/css">
-    .swal-text {
-      background-color: #D1EEEE;
-      padding: 15px;
-      font-size: 20px;
-      display: block;
-      margin: 22px;
-      text-align: center;
-    }
-    .swal-button {
-      padding: 12px 161px;
-      border-radius: 2px;
-      background-color:	#9F79EE;
-      font-size: 14px;
-      text-align: center;
-      margin-right:31px;
-    }
-    .video{width: 930px;height: 537px; background:#000;}
-
     </style>
 
 </head>
 
 <body>
   {% include "base/title.html" %}
-  {% include "base/nav.html" %}
+
   <div style="margin-left:50px;">
-    <h1>part 2</h1>
+    <h3 style="margin-top:20px;">第二部分 观看视频并回答问题</h3>
   </div>
-  <div style="margin-left:38px;">
 
-    <div class="container-fluid">
-      <div class="row">
-      <div class="col-md-3">
-        <video style="display:none;" id="video" width="120" height="120" controls  ></video>
-        <canvas style="background-color: black" id="canvas_1" width="240" height="240"></canvas>
-        <div style="width:250px;">
-          <h7>*在过程中，请你尽量把头的位置保持在圈内</h7>
-        </div>
-        <div style="width:250px;">
-          <h7>*请勿全屏观看此视频</h7>
-        </div>
-        <div style="width:250px;">
-          <button type="button" style="margin-left:0px;" class="btn btn-info mb-3" onclick="p3();">Finish</button>
-        </div>
+  <div class="d-flex mb-3">
+     <div class="p-2" style="margin-left:80px;">
+       <div>
+         <video style="display:none;" id="video" width="120" height="120" controls  ></video>
+         <canvas style="background-color: black" id="canvas_1" width="240" height="240"></canvas>
+         <canvas style="display:none;" id="canvas" width="120" height="120"></canvas>
+       </div>
+       <div style="width:250px;">
+         <h7>*在过程中，请你尽量把头的位置保持在圈内</h7>
+       </div>
+       <div style="width:250px;">
+         <h7>*请勿全屏观看此视频</h7>
+       </div>
+       <div style="width:250px;">
+         <button type="button" style="margin-left:0px;" class="btn btn-info mb-3" onclick="p3();">Finish</button>
+       </div>
+   </div>
 
-        <canvas style="display:none;" id="canvas" width="120" height="120"></canvas>
-      </div>
-      <div class="col-md-4">
-        <div class="video">
-          <div class="video_flash">
-            <div>
-              <video id="example" class="vjs-default-skin vjs-big-play-centered"  poster="{% static '/imgs/v1.JPG'%}" controls preload="auto" width="930" height="537">
-                 <source src="{% static '/media/version1.mp4'%}"  type="video/mp4">
-              <!--
-              <source src="http://1257273252.vod2.myqcloud.com/cc6d9a86vodcq1257273252/5d2b40f55285890794396832134/CSbIIqDpZEwA.mp4"  type="video/mp4">>
-                 <source src="https://www.billarts.club/static/media/1.ogg"  type="video/ogg">-->
-                 <p class="vjs-no-js"> To view this video please enable JavaScript, and consider upgrading to a web browser</p>
-              </video>
-          </div>
-        </div>
-      </div>
-          <h2>{{video_obj.title}}</h2>
-    </div>
-    </div>
-  </div>
-  </div>
+   <div class="p-2" style="margin-left:50px;">
+     <div class="video">
+       <div class="video_flash">
+         <div>
+           <video id="example" class="vjs-default-skin vjs-big-play-centered"  poster="{% static '/imgs/v1.JPG'%}" controls preload="auto" width=80% height=40%>
+              <source style=" background:#000;" src="{% static '/media/v2.mp4'%}"  type="video/mp4">
+              <p class="vjs-no-js"> To view this video please enable JavaScript, and consider upgrading to a web browser</p>
+           </video>
+       </div>
+     </div>
+   </div>
+
+</div>
+
+
 <br></br><br></br>
 </body>
 
 
 <script type="text/javascript">
+
+
 function p3(){
    window.location.href="/video/part3";
 }
+//<source src="http://1257273252.vod2.myqcloud.com/cc6d9a86vodcq1257273252/5d2b40f55285890794396832134/CSbIIqDpZEwA.mp4"  type="video/mp4">
+//<source src="https://www.billarts.club/static/media/1.ogg"  type="video/ogg">
 function getUserMedia(constraints, success, error) {
   if (navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);
@@ -112,7 +93,7 @@ function error(error) {
 if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
   getUserMedia({video : {width: 120, height: 120}}, success, error);
 } else {
-    alert('no allow');
+    //alert('no allow');
     //no allow
 }
 var video_id = {{video_id}}
@@ -149,14 +130,32 @@ function answer(question,answer){
 
 }
 
+var d=30;
+
+function test(){
+  var timecount = 0;
+  var aaa=document.getElementById("time");
+  var timer = window.setInterval(function(){
+        aaa.innerHTML="作答时间还剩:"+d.toString()+"秒";
+        d=d-1;
+        if(d<1){
+          clearInterval(timer);
+          d=30
+          swal.close();
+          v.play();
+        }
+  },1000);
+}
+
+
 function clearArc(x,y,radius){//圆心(x,y)，半径radius
-        var calcWidth=radius-stepClear;
+        var calcWidth=radius;
         var calcHeight=Math.sqrt(radius*radius-calcWidth*calcWidth);
         var posX=x-calcWidth;
         var posY=y-calcHeight;
         var widthX=2*calcWidth;
         var heightY=2*calcHeight;
-        context_1.clearRect(posX,posY,widthX,heightY);
+        //context_1.clearRect(posX,posY,widthX,heightY);
         clearArc(x,y,radius);
 
       }
@@ -183,7 +182,7 @@ function playvideo(){
                   },
               });
 
-          if(v.paused ){//|| v.paused
+          if(v.paused && timeDisplay!=2 && timeDisplay!=132 && timeDisplay!=182 && timeDisplay!=262 && timeDisplay!=345 && timeDisplay!=417 && timeDisplay!=477 && timeDisplay!=519 && timeDisplay!=590 && timeDisplay!=642){//|| v.paused
             v.removeEventListener("play",playvideo);
             clearInterval(i);
             v.addEventListener("play",playvideo);
@@ -198,54 +197,53 @@ function playvideo(){
           }
 
 
-          if(timeDisplay!=51){
+          if(timeDisplay!=54){
               flag_1 = 0;
           }
-          if(timeDisplay!=132){
+          if(timeDisplay!=137){
               flag_2 = 0;
           }
-          if(timeDisplay!=182){
+          if(timeDisplay!=188){
               flag_3 = 0;
           }
-          if(timeDisplay!=262){
+          if(timeDisplay!=270){
               flag_4 = 0;
           }
-          if(timeDisplay!=345){
+          if(timeDisplay!=355){
               flag_5 = 0;
           }
-          if(timeDisplay!=417){
+          if(timeDisplay!=427){
               flag_6 = 0;
           }
-          if(timeDisplay!=477){
+          if(timeDisplay!=493){
               flag_7 = 0;
           }
-          if(timeDisplay!=519){
+          if(timeDisplay!=535){
               flag_8 = 0;
           }
-          if(timeDisplay!=590){
+          if(timeDisplay!=608){
               flag_9 = 0;
           }
-          if(timeDisplay!=642){
+          if(timeDisplay!=662){
               flag_10 = 0;
           }
 
 
 
-          if(timeDisplay == 51 && flag_1 == 0){
+          if(timeDisplay == 54 && flag_1 == 0){
             v.pause();
             flag_1 = 1;
             content =
-            "<div><p1>已知a=1,b=2,c=3,d=4<p1></div>"
-            +"<div>(1) a+c=5</div>"
-            +"<div>(2) b+c=5 </div>"
-            +"<div>(3) c+d=5 </div> "
-            +"<div style='margin-bottom:20px;'>(4)	a+d=5 </div>"
+            "<div><a style='font-size:30px'>已知a=1,b=2,c=3,d=4<a></div>"
+            +"<div><a style='font-size:30px'>(1) a+c=5   (2) b+c=5</a></div>"
+            +"<div style='margin-bottom:20px;'><a style='font-size:30px'>(3) c+d=5   (4) a+d=5</a> </div>"
             + "<div><table class='table_list'>"
-            +"<button type='button' id='A1' value='A' style='width:130px;'  class='btn btn-info mb-3' onclick='answer(1,1);'>A. (1) 正确</button>"
-            + "<div><button type='button' id='B1' value='B' style='width:130px;' class='btn btn-info mb-3' onclick='answer(1,2);'>B. (1)(3) 正确</button></div>"
-            + "<div><button type='button' id='C1' value='C' style='width:130px;' class='btn btn-info mb-3' onclick='answer(1,3);'>C. (3) 正确</button></div>"
-            + "<div><button type='button' id='D1' value='D' style='width:130px;' class='btn btn-info mb-3' onclick='answer(1,4);'>D. (2)(4) 正确</button></div>"
+            +"<button type='button' id='A1' value='A' style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(1,1);'>A. (1) 正确</button>"
+            + "<div><button type='button' id='B1' value='B' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(1,2);'>B. (1)(3) 正确</button></div>"
+            + "<div><button type='button' id='C1' value='C' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(1,3);'>C. (3) 正确</button></div>"
+            + "<div><button type='button' id='D1' value='D' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(1,4);'>D. (2)(4) 正确</button></div>"
             + "</table></div>"
+            + "<a id='time'></a>"
             Swal.fire({
                 title: '<strong>Question 1</strong>',
                 type: 'info',
@@ -253,23 +251,25 @@ function playvideo(){
                 showConfirmButton: false,
                 showCloseButton: false,//右上角关闭
                 focusClose: false,
-                //allowOutsideClick :false,
+                allowOutsideClick :false,
             })
+            test();
 
           }
 
 
-          if(timeDisplay == 132 && flag_2 == 0){
+          if(timeDisplay == 137 && flag_2 == 0){
             v.pause();
             flag_2= 1;
-            content ="<div> 某班有80% 的学生喜欢打乒乓球，40%的学生打篮球，问喜欢打乒乓球的学生中，至少有百分之几喜欢打篮球?</div>"
-            +"<div style='margin-bottom:20px;'><p1>已知a=15%,b=25%,c=30%,d=40%<p1></div>"
+            content ="<div> <a style='font-size:30px'>某班有80%的学生喜欢打乒乓球，40%的学生打篮球，问喜欢打乒乓球的学生中，至少有百分之几喜欢打篮球?</a ><div> "
+            +"<div style='margin-bottom:30px;'><a style='font-size:30px'>已知a=15%,b=25%,c=30%,d=40%</a ></div>"
             + "<div><table class='table_list'>"
-            +"<button type='button' id='A' style='width:130px;'  class='btn btn-info mb-3' onclick='answer(2,1);'>A. b</button>"
-            + "<div><button type='button' id='B' style='width:130px;' class='btn btn-info mb-3' onclick='answer(2,2);;'>B. a+b</button></div>"
-            + "<div><button type='button' id='C' style='width:130px;' class='btn btn-info mb-3' onclick='answer(2,3);;'>C. d</button></div>"
-            + "<div><button type='button' id='D' style='width:130px;' class='btn btn-info mb-3' onclick='answer(2,4);'>D. a+c</button></div>"
+            +"<button type='button' id='A' style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(2,1);'>A. b</button>"
+            + "<div><button type='button' id='B' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(2,2);;'>B. a+b</button></div>"
+            + "<div><button type='button' id='C' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(2,3);;'>C. d</button></div>"
+            + "<div><button type='button' id='D' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(2,4);'>D. a+c</button></div>"
             + "</table></div>"
+            + "<a id='time'></a>"
             Swal.fire({
                 title: '<strong>Question 2</strong>',
                 type: 'info',
@@ -279,22 +279,24 @@ function playvideo(){
                 focusClose: false,
                 allowOutsideClick :false,
             })
+            test();
           }
 
 
 
-          if(timeDisplay == 182 && flag_3 == 0){
+          if(timeDisplay == 188 && flag_3 == 0){
             v.pause();
             flag_3= 1;
             content ="<img src='{% static '/imgs/3.png'%}'  />"
-            +"<div>求满足此式的最大整数n</div>"
-            +"<div style='margin-bottom:20px;'><p1>已知a=1,b=2,c=3,d=4<p1></div>"
+            +"<div> <a style='font-size:30px'>求满足此式的最大整数n</a></div>"
+            +"<div style='margin-bottom:20px;'> <a style='font-size:30px'>已知a=1,b=2,c=3,d=4</a></div>"
             + "<div><table class='table_list'>"
-            +"<button type='button' id='A' style='width:130px;'  class='btn btn-info mb-3' onclick='answer(3,1);'>A. n=a+b</button>"
-            + "<div><button type='button' id='B' style='width:130px;' class='btn btn-info mb-3' onclick='answer(3,2);'>B. n=a+c</button></div>"
-            + "<div><button type='button' id='C' style='width:130px;' class='btn btn-info mb-3' onclick='answer(3,3);'>C. n=b+c</button></div>"
-            + "<div><button type='button' id='D' style='width:130px;' class='btn btn-info mb-3' onclick='answer(3,4);'>D. n=d</button></div>"
+            +"<button type='button' id='A' style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(3,1);'>A. n=a+b</button>"
+            + "<div><button type='button' id='B' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(3,2);'>B. n=a+c</button></div>"
+            + "<div><button type='button' id='C' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(3,3);'>C. n=b+c</button></div>"
+            + "<div><button type='button' id='D' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(3,4);'>D. n=d</button></div>"
             + "</table></div>"
+            + "<a id='time'></a>"
             Swal.fire({
                 title: '<strong>Question 3</strong>',
                 type: 'info',
@@ -304,22 +306,24 @@ function playvideo(){
                 focusClose: false,
                 allowOutsideClick :false,
             })
+            test();
           }
 
 
 
-          if(timeDisplay == 262 && flag_4 == 0){
+          if(timeDisplay == 270 && flag_4 == 0){
             v.pause();
             flag_4= 1;
             content =""
-            +"<div>下列4个数，哪个写成100个连续自然数的和？</div>"
-            +"<div style='margin-bottom:20px;'><p1>下列4个数，哪个可写成100个连续自然数的和a)14950，b)51340，c)4950，d)5050<p1></div>"
+            +"<div><a style='font-size:30px'>下列4个数，哪个写成100个连续自然数的和？</a></div>"
+            +"<div style='margin-bottom:20px;'><a style='font-size:30px'>a.14950 b.51340 c.4950 d.5050</a></div>"
             + "<div><table class='table_list'>"
-            +"<button type='button' id='A' style='width:130px;'  class='btn btn-info mb-3' onclick='answer(4,1);'>A. a和 d</button>"
-            + "<div><button type='button' id='B' style='width:130px;' class='btn btn-info mb-3' onclick='answer(4,2);'>B. b和c</button></div>"
-            + "<div><button type='button' id='C' style='width:130px;' class='btn btn-info mb-3' onclick='answer(4,3);'>C. a和c</button></div>"
-            + "<div><button type='button' id='D' style='width:130px;' class='btn btn-info mb-3' onclick='answer(4,4);'>D. b和d</button></div>"
+            +"<button type='button' id='A' style=style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(4,1);'>A. a和 d</button>"
+            + "<div><button type='button' id='B' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(4,2);'>B. b和c</button></div>"
+            + "<div><button type='button' id='C' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(4,3);'>C. a和c</button></div>"
+            + "<div><button type='button' id='D' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(4,4);'>D. b和d</button></div>"
             + "</table></div>"
+            + "<a id='time'></a>"
             Swal.fire({
                 title: '<strong>Question 4</strong>',
                 type: 'info',
@@ -329,20 +333,22 @@ function playvideo(){
                 focusClose: false,
                 allowOutsideClick :false,
             })
+            test();
           }
 
-          if(timeDisplay == 345 && flag_5 == 0){
+          if(timeDisplay == 355 && flag_5 == 0){
             v.pause();
             flag_5= 1;
             content =""
-            +"<div>阅览室有100本书，小李看过80本，小王看过60本，小刘看过70本，则三人看过的书，最少有（ ）本？</div>"
-            +"<div style='margin-bottom:20px;'><p1>已知a=5 ,b=10, c=15, d=20<p1></div>"
+            +"<div><a style='font-size:30px'>阅览室有100本书，小李看过80本，小王看过60本，小刘看过70本，则三人看过的书，最少有（ ）本？</a></div>"
+            +"<div style='margin-bottom:20px;'><a style='font-size:30px'>已知a=5 ,b=10, c=15, d=20</a></div>"
             + "<div><table class='table_list'>"
-            +"<button type='button' id='A' style='width:130px;'  class='btn btn-info mb-3' onclick='answer(5,1);'>A. a</button>"
-            + "<div><button type='button' id='B' style='width:130px;' class='btn btn-info mb-3' onclick='answer(5,2);'>B. a+c</button></div>"
-            + "<div><button type='button' id='C' style='width:130px;' class='btn btn-info mb-3' onclick='answer(5,3);'>C. b</button></div>"
-            + "<div><button type='button' id='D' style='width:130px;' class='btn btn-info mb-3' onclick='answer(5,4);'>D. a+b</button></div>"
+            +"<button type='button' id='A' style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(5,1);'>A. a</button>"
+            + "<div><button type='button' id='B' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(5,2);'>B. a+c</button></div>"
+            + "<div><button type='button' id='C' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(5,3);'>C. b</button></div>"
+            + "<div><button type='button' id='D' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(5,4);'>D. a+b</button></div>"
             + "</table></div>"
+            + "<a id='time'></a>"
             Swal.fire({
                 title: '<strong>Question 5</strong>',
                 type: 'info',
@@ -352,22 +358,24 @@ function playvideo(){
                 focusClose: false,
                 allowOutsideClick :false,
             })
+            test();
           }
 
 
 
-          if(timeDisplay == 417 && flag_6 == 0){
+          if(timeDisplay == 429 && flag_6 == 0){
             v.pause();
             flag_6= 1;
             content =""
-            +"<div>2016年7月1日是星期五，那么2020年7月1日是星期几？</div>"
-            +"<div style='margin-bottom:20px;'><p1>已知a=1, b=2, c=4, d=5<p1></div>"
+            +"<div><a style='font-size:30px'>2016年7月1日是星期五，那么2020年7月1日是星期几？</a></div>"
+            +"<div style='margin-bottom:20px;'><a style='font-size:30px'>已知a=1, b=2, c=4, d=5</a></div>"
             + "<div><table class='table_list'>"
-            +"<button type='button' id='A' style='width:130px;'  class='btn btn-info mb-3' onclick='answer(6,1);'>A. a</button>"
-            + "<div><button type='button' id='B' style='width:130px;' class='btn btn-info mb-3' onclick='answer(6,2);'>B. a+b</button></div>"
-            + "<div><button type='button' id='C' style='width:130px;' class='btn btn-info mb-3' onclick='answer(6,3);'>C. c</button></div>"
-            + "<div><button type='button' id='D' style='width:130px;' class='btn btn-info mb-3' onclick='answer(6,4);'>D. a+d</button></div>"
+            +"<button type='button' id='A' style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(6,1);'>A. a</button>"
+            + "<div><button type='button' id='B' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(6,2);'>B. a+b</button></div>"
+            + "<div><button type='button' id='C' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(6,3);'>C. c</button></div>"
+            + "<div><button type='button' id='D' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(6,4);'>D. a+d</button></div>"
             + "</table></div>"
+            + "<a id='time'></a>"
             Swal.fire({
                 title: '<strong>Question 6</strong>',
                 type: 'info',
@@ -377,20 +385,22 @@ function playvideo(){
                 focusClose: false,
                 allowOutsideClick :false,
             })
+            test();
           }
 
 
-          if(timeDisplay == 477 && flag_7 == 0){
+          if(timeDisplay == 493 && flag_7 == 0){
             v.pause();
             flag_7= 1;
             content =""
-            +"<div style='margin-bottom:20px;'><p1>The teacher asked the students _____?<p1></div>"
+            +"<div style='margin-bottom:20px;'><a style='font-size:30px'>The teacher asked the students _____?</a></div>"
             + "<div><table class='table_list'>"
-            +"<button type='button' id='A' style='width:350px;'  class='btn btn-info mb-3' onclick='answer(7,1);'>A. if they were interested in dinosaurs</button>"
-            + "<div><button type='button' id='B' style='width:350px;' class='btn btn-info mb-3' onclick='answer(7,2);'>B. when was Albert Einstein born</button></div>"
-            + "<div><button type='button' id='C' style='width:350px;' class='btn btn-info mb-3' onclick='answer(7,3);'>C. what they will do with the computers</button></div>"
-            + "<div><button type='button' id='D' style='width:350px;' class='btn btn-info mb-3' onclick='answer(7,4);'>D. How many trees they have planted</button></div>"
+            +"<button type='button' id='A' style='width:400px;font-size:20px'   class='btn btn-info mb-3' onclick='answer(7,1);'>A. if they were interested in dinosaurs</button>"
+            + "<div><button type='button' id='B' style='width:400px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(7,2);'>B. when was Albert Einstein born</button></div>"
+            + "<div><button type='button' id='C' style='width:400px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(7,3);'>C. what they will do with the computers</button></div>"
+            + "<div><button type='button' id='D' style='width:400px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(7,4);'>D. How many trees they have planted</button></div>"
             + "</table></div>"
+            + "<a id='time'></a>"
             Swal.fire({
                 title: '<strong>Question 7</strong>',
                 type: 'info',
@@ -400,20 +410,22 @@ function playvideo(){
                 focusClose: false,
                 allowOutsideClick :false,
             })
+            test();
           }
 
 
-          if(timeDisplay == 519 && flag_8 == 0){
+          if(timeDisplay == 535 && flag_8 == 0){
             v.pause();
             flag_8= 1;
-            content ="<img src='{% static '/imgs/8.png'%}'  />"
-            +"<div style='margin-bottom:20px;'><p1>已知 a=20, b=40, c=50, d=80<p1></div>"
+            content ="<img src='8.png'  />"
+            +"<div style='margin-bottom:20px;'><a style='font-size:30px'>已知 a=20, b=40, c=50, d=80</a></div>"
             + "<div><table class='table_list'>"
-            +"<button type='button' id='A' style='width:130px;'  class='btn btn-info mb-3' onclick='answer(8,1);'>A. a+b</button>"
-            + "<div><button type='button' id='B' style='width:130px;' class='btn btn-info mb-3' onclick='answer(8,2);'>B. b</button></div>"
-            + "<div><button type='button' id='C' style='width:130px;' class='btn btn-info mb-3' onclick='answer(8,3);'>C. b+d</button></div>"
-            + "<div><button type='button' id='D' style='width:130px;' class='btn btn-info mb-3' onclick='answer(8,4);'>D. d</button></div>"
+            +"<button type='button' id='A' style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(8,1);'>A. a+b</button>"
+            + "<div><button type='button' id='B' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(8,2);'>B. b</button></div>"
+            + "<div><button type='button' id='C' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(8,3);'>C. b+d</button></div>"
+            + "<div><button type='button' id='D' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(8,4);'>D. d</button></div>"
             + "</table></div>"
+            + "<a id='time'></a>"
             Swal.fire({
                 title: '<strong>Question 8</strong>',
                 type: 'info',
@@ -423,23 +435,25 @@ function playvideo(){
                 focusClose: false,
                 allowOutsideClick :false,
             })
+            test();
           }
 
 
 
 
-          if(timeDisplay == 590 && flag_9 == 0){
+          if(timeDisplay == 608 && flag_9 == 0){
             v.pause();
             flag_9= 1;
             content =""
-            +"<div>某人从1楼到2楼用了20秒，用同样的速度从1楼走到5楼需要多少秒？</div>"
+            +"<div><a style='font-size:30px'>某人从1楼到2楼用了20秒，用同样的速度从1楼走到5楼需要多少秒？</div>"
             +"<div style='margin-bottom:20px;'><p1>已知 a=10, b=30, c=40, d=50<p1></div>"
             + "<div><table class='table_list'>"
-            +"<button type='button' id='A' style='width:130px;'  class='btn btn-info mb-3' onclick='answer(9,1);'>A. a+d</button>"
-            + "<div><button type='button' id='B' style='width:130px;' class='btn btn-info mb-3' onclick='answer(9,2);'>B. c</button></div>"
-            + "<div><button type='button' id='C' style='width:130px;' class='btn btn-info mb-3' onclick='answer(9,3);'>C. b+d</button></div>"
-            + "<div><button type='button' id='D' style='width:130px;' class='btn btn-info mb-3' onclick='answer(9,4);'>D. d</button></div>"
+            +"<button type='button' id='A' style='width:150px;font-size:20px'   class='btn btn-info mb-3' onclick='answer(9,1);'>A. a+d</button>"
+            + "<div><button type='button' id='B' style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(9,2);'>B. c</button></div>"
+            + "<div><button type='button' id='C' style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(9,3);'>C. b+d</button></div>"
+            + "<div><button type='button' id='D' style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(9,4);'>D. d</button></div>"
             + "</table></div>"
+            + "<a id='time'></a>"
             Swal.fire({
                 title: '<strong>Question 9</strong>',
                 type: 'info',
@@ -449,19 +463,21 @@ function playvideo(){
                 focusClose: false,
                 allowOutsideClick :false,
             })
+            test();
           }
 
-          if(timeDisplay == 642 && flag_10 == 0){
+          if(timeDisplay == 662 && flag_10 == 0){
             v.pause();
             flag_10= 1;
-            content ="<img src='{% static '/imgs/10.png'%}'  />"
-            +"<div style='margin-bottom:20px;'><p1>已知 a=1, b=2, c=3, d=4<p1></div>"
+            "<div style=''><img src='10.png'  />"
+            +"<div style='margin-bottom:20px;'><a style='font-size:30px'>已知 a=1, b=2, c=3, d=4</a></div>"
             + "<div><table class='table_list'>"
-            +"<button type='button' id='A' style='width:130px;'  class='btn btn-info mb-3' onclick='answer(10,1);'>A. a/b</button>"
-            + "<div><button type='button' id='B' style='width:130px;' class='btn btn-info mb-3' onclick='answer(10,2);'>B. d/b</button></div>"
-            + "<div><button type='button' id='C' style='width:130px;' class='btn btn-info mb-3' onclick='answer(10,3);'>C. c/d</button></div>"
-            + "<div><button type='button' id='D' style='width:130px;' class='btn btn-info mb-3' onclick='answer(10,4);'>D. a/d</button></div>"
+            +"<button type='button' id='A' style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(10,1);'>A. a/b</button>"
+            + "<div><button type='button' id='B' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(10,2);'>B. d/b</button></div>"
+            + "<div><button type='button' id='C' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(10,3);'>C. c/d</button></div>"
+            + "<div><button type='button' id='D' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(10,4);'>D. a/d</button></div>"
             + "</table></div>"
+            + "<a id='time'></a>"
             Swal.fire({
                 title: '<strong>Question 10</strong>',
                 type: 'info',
@@ -471,6 +487,7 @@ function playvideo(){
                 focusClose: false,
                 allowOutsideClick :false,
             })
+            test();
           }
 
 
@@ -500,12 +517,20 @@ window.onload = function(){
 
 }
 
-
 var v = document.getElementById('example');
 v.addEventListener("play",playvideo);
 
+$(window).resize(function () {
 
-
+  var isFullscreen = document.fullscreenEnabled || window.fullScreen || document.webkitIsFullScreen || document.msFullscreenEnabled;
+  //注意：要在用户授权全屏后才能准确获取当前的状态
+  if(isFullscreen){
+    //console.log('全屏模式');
+    document.exitFullscreen();
+  }else{
+    //console.log('非全屏模式');
+  }
+});
 
 </script>
 

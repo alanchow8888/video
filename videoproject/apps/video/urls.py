@@ -6,7 +6,6 @@ app_name = 'video'
 
 urlpatterns = [
     path('index', Index.as_view(), name='index'),
-    path('<int:video_id>', videolist.as_view(), name='videolist'),
     #path('test', IndexView.as_view(), name='IndexView'),
     path('record', record, name='record'),
     path('part<int:page_id>', partlist.as_view(), name='partlist'),
