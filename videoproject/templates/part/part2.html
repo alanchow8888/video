@@ -19,7 +19,6 @@
 
 <body>
   {% include "base/title.html" %}
-
   <div style="margin-left:50px;">
     <h3 style="margin-top:20px;">第二部分 观看视频并回答问题</h3>
   </div>
@@ -212,7 +211,7 @@ function playvideo(){
           if(timeDisplay!=355){
               flag_5 = 0;
           }
-          if(timeDisplay!=427){
+          if(timeDisplay!=429){
               flag_6 = 0;
           }
           if(timeDisplay!=493){
@@ -417,7 +416,7 @@ function playvideo(){
           if(timeDisplay == 535 && flag_8 == 0){
             v.pause();
             flag_8= 1;
-            content ="{% static '/imgs/8.png'%}"
+            content ="<img src='{% static '/imgs/8.png'%}'  />"
             +"<div style='margin-bottom:20px;'><a style='font-size:30px'>已知 a=2, b=4, c=5, d=8</a></div>"
             + "<div><table class='table_list'>"
             +"<button type='button' id='A' style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(8,1);'>A. a+b</button>"
@@ -469,7 +468,7 @@ function playvideo(){
           if(timeDisplay == 662 && flag_10 == 0){
             v.pause();
             flag_10= 1;
-            content ="<div style=''>{% static '/imgs/10.png'%}"
+            content ="<div><img src='{% static '/imgs/10.png'%}'  /></div>"
             +"<div style='margin-bottom:20px;'><a style='font-size:30px'>已知 a=1, b=2, c=3, d=4</a></div>"
             + "<div><table class='table_list'>"
             +"<button type='button' id='A' style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(10,1);'>A. a/b</button>"
