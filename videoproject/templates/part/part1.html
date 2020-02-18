@@ -70,7 +70,7 @@
   }
   function error(error) {
     console.log(`error${error.name}, ${error.message}`);
-    alert("error");
+    alert('没有检查到摄像头,请检查本机摄像头是否正常');
   }
   if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
     getUserMedia({video : {width: 480, height: 480}}, success, error);

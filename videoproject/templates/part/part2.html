@@ -46,7 +46,7 @@
      <div class="video">
        <div class="video_flash">
          <div>
-           <video id="example" class="vjs-default-skin vjs-big-play-centered"  poster="{% static '/imgs/v1.JPG'%}" controls preload="auto" width=80% height=40%>
+           <video id="example" class="vjs-default-skin vjs-big-play-centered"  poster="{% static '/imgs/v1.jpg'%}" controls preload="auto" width=80% height=40%>
               <source style=" background:#000;" src="{% static '/media/v2.mp4'%}"  type="video/mp4">
               <p class="vjs-no-js"> To view this video please enable JavaScript, and consider upgrading to a web browser</p>
            </video>
@@ -88,12 +88,12 @@ function success(stream) {
 }
 function error(error) {
   console.log(`error${error.name}, ${error.message}`);
-  alert("error");
+    alert('没有检查到摄像头,请检查本机摄像头是否正常');
 }
 if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
   getUserMedia({video : {width: 120, height: 120}}, success, error);
 } else {
-    //alert('no allow');
+    alert('没有检查到摄像头,请检查本机摄像头是否正常');
     //no allow
 }
 var video_id = {{video_id}}
@@ -224,7 +224,7 @@ function playvideo(){
           if(timeDisplay!=608){
               flag_9 = 0;
           }
-          if(timeDisplay!=662){
+          if(timeDisplay!=662){//662
               flag_10 = 0;
           }
 
@@ -318,7 +318,7 @@ function playvideo(){
             +"<div><a style='font-size:30px'>下列4个数，哪个写成100个连续自然数的和？</a></div>"
             +"<div style='margin-bottom:20px;'><a style='font-size:30px'>a.14950 b.51340 c.4950 d.5050</a></div>"
             + "<div><table class='table_list'>"
-            +"<button type='button' id='A' style=style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(4,1);'>A. a和 d</button>"
+            + "<div><button type='button' id='A' style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(4,1);'>A. a和d</button></div>"
             + "<div><button type='button' id='B' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(4,2);'>B. b和c</button></div>"
             + "<div><button type='button' id='C' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(4,3);'>C. a和c</button></div>"
             + "<div><button type='button' id='D' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(4,4);'>D. b和d</button></div>"
@@ -417,12 +417,12 @@ function playvideo(){
           if(timeDisplay == 535 && flag_8 == 0){
             v.pause();
             flag_8= 1;
-            content ="<img src='8.png'  />"
-            +"<div style='margin-bottom:20px;'><a style='font-size:30px'>已知 a=20, b=40, c=50, d=80</a></div>"
+            content ="{% static '/imgs/8.png'%}"
+            +"<div style='margin-bottom:20px;'><a style='font-size:30px'>已知 a=2, b=4, c=5, d=8</a></div>"
             + "<div><table class='table_list'>"
             +"<button type='button' id='A' style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(8,1);'>A. a+b</button>"
             + "<div><button type='button' id='B' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(8,2);'>B. b</button></div>"
-            + "<div><button type='button' id='C' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(8,3);'>C. b+d</button></div>"
+            + "<div><button type='button' id='C' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(8,3);'>C. c</button></div>"
             + "<div><button type='button' id='D' style='width:150px;font-size:20px' class='btn btn-info mb-3' onclick='answer(8,4);'>D. d</button></div>"
             + "</table></div>"
             + "<a id='time'></a>"
@@ -469,7 +469,7 @@ function playvideo(){
           if(timeDisplay == 662 && flag_10 == 0){
             v.pause();
             flag_10= 1;
-            "<div style=''><img src='10.png'  />"
+            content ="<div style=''>{% static '/imgs/10.png'%}"
             +"<div style='margin-bottom:20px;'><a style='font-size:30px'>已知 a=1, b=2, c=3, d=4</a></div>"
             + "<div><table class='table_list'>"
             +"<button type='button' id='A' style='width:150px;font-size:20px'  class='btn btn-info mb-3' onclick='answer(10,1);'>A. a/b</button>"

@@ -96,7 +96,7 @@ class partlist(View):
         if request.user.is_authenticated:
             if(page_id == 2):
                 try:
-                    passfail = request.COOKIES['p2']
+                    #passfail = request.COOKIES['p2']
                     video_id = request.GET.get('video_id','1')
                     if(Video_user.objects.filter(user_id=request.user.id,video_id=video_id).exists()):
                         video_times=Video_user.objects.filter(user_id=request.user.id,video_id=video_id).aggregate(Max('times'))['times__max']+int(1)#.values("times")[0]['times']+int(1)
