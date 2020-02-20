@@ -3,46 +3,67 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Admin</title>
+    <title>Login</title>
     {% load staticfiles %}
     <!-- Bootstrap core CSS -->
     <link href="{% static 'libs/bookstrap/bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'css/signin.css' %}" rel="stylesheet">
     <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
-    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/semantic-ui/2.4.1/semantic.min.css">
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/semantic.min.css' %}" rel="stylesheet">
     <link rel="shortcut icon" href="{% static 'imgs/AI_32px.ico' %}" />
+    <style>
+
+    .form{background: rgba(255,255,255,0.2);width:100%;height:45%;margin-left: 35%;}
+    body {
+      display: -ms-flexbox;
+      display: flex;
+      padding-top: 0px;
+      padding-bottom: 10px;
+      background-color: #3398eb;
+    }
+
+    .fa{top: 25px;left: 12px;color: #ccc;}
+
+    #fold {
+      background-size: cover;
+      background: #3398eb no-repeat center center;
+      min-height: 100%;
+    }
+
+    #fold a.navbar-brand {
+      color: white;
+      line-height: 20px;
+      font-size: 2.5rem;
+    }
+
+
+    </style>
 
 </head>
-  <body id="account-body"  style=" background: url({% static '/imgs/bg.jpg'%}) no-repeat center center fixed; background-size: 100%;">
-    <div class="container">
-          <div class="form row">
-              <div class="col-md mb-0">
-                  <h1 class="form-title text-center mb-0" style="font-size:38px;">Admin</h1>
-                  <div class="col-md-5">
-                    <form  id="login_form" class="" novalidate method="post" action="{% url 'myadmin:login' %}" enctype="multipart/form-data">
-                      <div class="input">
-                          <i class="fa fa-user fa-lg"></i>
-                          <input class="form-control required" value="{{content.username}}" type="account"  placeholder="Username" id="username" name="username" maxlength="20"/>
-                      </div>
-                      <div class="password mb-3">
-                              <i class="fa fa-lock fa-lg"></i>
-                              <input class="form-control required" type="password" placeholder="Password" id="password" name="password" maxlength="18"/>
-                      </div>
-                      <div class="form-group mb-2">
-                          <label class="checkbox  mb-1">
-                              <input type="checkbox" name="remember" id="remember" value="1"/>Remember
-                          </label>
-                      </div>
-                      <div  class="form-group text-center">
-                          {% include "base/error.html" %}
-                          <button type="submit"  style="padding:12px 30px;margin-left:103px" class=" ui teal  button" name="submit">Login</button>
-                      </div>
-                    </form>
-                  </div>
-              </div>
+  <body>
+
+
+      <div class="col-md " align="center" style="margin-top:10%;">
+        <br></br>
+        <div align="center">
+          <a class="text-center" style="font-size:48px;color: white;">Admin</a>
+        </div>
+        <form  id="login_form" class="" novalidate method="post" action="{% url 'myadmin:login' %}" enctype="multipart/form-data">
+          <div class="input" style="margin-top:1%;">
+              <input class="form-control required" value="{{content.username}}" type="account"  placeholder="账号" id="username" name="username" maxlength="20"/>
           </div>
+          <div class="password mb-3" style="margin-top:1%;">
+                  <input class="form-control required" value="{{content.rememberpsw}}" type="password" placeholder="密码" id="password" name="password" maxlength="18"/>
+          </div>
+
+          <div  class="form-group ">
+              {% include "base/error.html" %}
+              <button type="submit"  style="padding:15px 40px;" class=" ui teal  button" name="submit">登陆</button>
+          </div>
+        </form>
       </div>
+
 
 
   </body>

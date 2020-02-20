@@ -8,15 +8,28 @@ from django.http import HttpResponseRedirect
 from django.views.generic import View
 from video.models import Video_user
 import json
+import os
 
 class list(View):
     def get(self, request):
-        detail1 = Video_user.objects.filter(user=request.user,video=1).values()
-        detail2 = Video_user.objects.filter(user=request.user,video=2).values()
-        user = request.user
-        content={'detail1':detail1,'detail2':detail2,'user':user}
-        response = render(request, 'myadmin/list.html',{'content':content})
-        return response
+        if not request.user.is_superuser:
+            return render(request, 'myadmin/login.html', {'error': 4})
+        else:
+            content={}
+            picture_path=os.getcwd()+"/static/data/picture/"
+            fileList = os.listdir(picture_path)
+            fileList.remove('1.txt');
+            fileList.remove('root');
+            content['filelist']= fileList
+            #detail1 = Video_user.objects.filter(user=request.user,video=1).values()
+            #detail2 = Video_user.objects.filter(user=request.user,video=2).values()
+            #user = request.user
+            #content={'detail1':detail1,'detail2':detail2,'user':user}
+            content2={}
+            content2['val']={'filelist':['a','b'],'size':['1','2']}
+            print(content2)
+            response = render(request, 'myadmin/list.html',{'content':content2})
+            return response
 
 class Index(View):
     def get(self, request):
@@ -28,33 +41,45 @@ class Index(View):
         content['username'] = username
         return render_to_response("myadmin/login.html",{'content': content})
 
+class query_result(View):
+    def get(self, request,user,times,**kwargs):
+        if not request.user.is_superuser:
+            return render(request, 'myadmin/login.html', {'error': 4})
+        else:
+            content={}
+            internal="/static/data/picture/"+user+"/video1/"+str(times)+"/"
+            picture_path=os.getcwd()+internal
+            fileList = os.listdir(picture_path)
+            n=[ internal+x for x in fileList ]
+            content=n
+            return render_to_response("myadmin/list2.html",{'content': content})
 
-def delete(request):
+
+def query_path(request):
     if request.method == 'POST':
         if not request.user.is_superuser:
-            return JsonResponse({"code": 1, "msg": "无删除权限"})
-        data = json.loads(request.body)
-        video_id = data['video_id']
-        times = data['times']
-        videotime = data['videotime']
-        instance = Video_user.objects.filter(user=request.user,video_id=video_id,video_time=videotime,times=times)
-        instance.delete()
-        return JsonResponse({"code": 0, "msg": "success"})
+            return JsonResponse({"code": 0, "msg": "无权限"})
+        else:
+            data = json.loads(request.body)
+            user_name = data['user']
+            picture_path=os.getcwd()+"/static/data/picture/"
+            personfile = os.listdir(picture_path+user_name+'/video1/')
+            str = '["'+'","'.join(personfile)+'"]'
+            content = '{"data":'+str+'}'
+            return HttpResponse(content)
 
 
 def login(request):
     if request.method == 'POST':
         password = request.POST.get('password')
         username = request.POST.get('username')
-        remember = request.POST.get('remember')
+
         if(username=='' or password == ''):
             return render(request, 'myadmin/login.html', {'error': 0})
         else:
             user = authenticate(username=username, password=password)
             if user is not None:
                 response =  redirect('/myadmin/list')
-                if remember:
-                    response.set_cookie('username',username,max_age=7*24*3600)
                 auth_login(request, user)
                 return response
             else:

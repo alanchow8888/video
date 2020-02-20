@@ -129,7 +129,7 @@ function answer(question,answer){
 
 }
 
-var d=30;
+var d=60;
 
 function test(){
   var timecount = 0;
@@ -139,7 +139,7 @@ function test(){
         d=d-1;
         if(d<1){
           clearInterval(timer);
-          d=30
+          d=60;
           swal.close();
           v.play();
         }
@@ -181,7 +181,7 @@ function playvideo(){
                   },
               });
 
-          if(v.paused && timeDisplay!=2 && timeDisplay!=132 && timeDisplay!=182 && timeDisplay!=262 && timeDisplay!=345 && timeDisplay!=417 && timeDisplay!=477 && timeDisplay!=519 && timeDisplay!=590 && timeDisplay!=642){//|| v.paused
+          if(v.paused && timeDisplay!=54 && timeDisplay!=137 && timeDisplay!=188 && timeDisplay!=270 && timeDisplay!=355 && timeDisplay!=429 && timeDisplay!=493 && timeDisplay!=535 && timeDisplay!=608 && timeDisplay!=662){//|| v.paused
             v.removeEventListener("play",playvideo);
             clearInterval(i);
             v.addEventListener("play",playvideo);
@@ -196,7 +196,7 @@ function playvideo(){
           }
 
 
-          if(timeDisplay!=54){
+          if(timeDisplay!=54){//54
               flag_1 = 0;
           }
           if(timeDisplay!=137){

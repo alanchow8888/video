@@ -10,8 +10,53 @@
     <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
     <link rel="shortcut icon" href="{% static 'imgs/AI_32px.ico' %}" />
 </head>
+
+<body>
+   {% include "base/title.html" %}
+   <div >
+    <div id="selection" align="center">
+      <a>用户名：</a>
+      <select id="user">
+        {% for i in content.filelist %}
+        <option><a>{{i}}</a></option>
+        {% endfor %}
+      </select>
+      <input style="padding:0px 20px;" class=" ui teal  button" type="button" value="查询" onclick="query1()">
+    </div>
+
+    <div  align="center">
+      <p id="demo"></p>
+    </div>
+
+  </div>
+
+
+</body>
+
 <script type="text/javascript">
-  function de(videoid,times,videotime){
+
+  function query1(){
+    var myselect=document.getElementById("user");
+    var index=myselect.selectedIndex;
+    var username=myselect.options[index].value;
+    data = {user:username};
+    var senddata = JSON.stringify(data);
+    var myObj, i, x = "";
+    $.ajax({
+            url: "/myadmin/query_path/",
+            type: "post",
+            data: senddata,
+            success: function (data) {
+              var jsonData = JSON.parse(data);
+              for (i in jsonData.data) {
+                x += "<a href='/myadmin/query_result/"+username+'/'+jsonData.data[i] +"/'"+" style='margin-left:10px'>第"+jsonData.data[i] + "次观看</a><br>";
+              }
+              document.getElementById("demo").innerHTML = x;
+            },
+        });
+  }
+
+  function query2(user,times){
     videodata = {video_id:videoid,times:times,videotime:videotime};
     var senddata = JSON.stringify(videodata);
     $.ajax({
@@ -25,54 +70,5 @@
         });
   }
 </script>
-
-<body>
-   {% include "base/title.html" %}
-   <div>
-
-     <h1>Video 1</h1>
-     <div class="album py-3">
-       <div class="row">
-         {% for v1 in content.detail1 %}
-          {% if v1.picture %}
-           <div class="col-md-2">
-             <div class="card mb-2 shadow-sm">
-               <img src="data:image/png;base64,{{v1.picture}}" class="card-img-top">
-               <div class="card-body">
-                 <h5>第{{v1.times}}次观看,{{v1.video_time}}s</h5>
-                 <button  class="btn  mb-2" onclick="de(1,{{v1.times}},{{v1.video_time}});"  type="button" name="button">delete</button>
-
-               </div>
-             </div>
-           </div>
-            {% endif %}
-        {% endfor %}
-       </div>
-     </div>
-   </div>
-
-   <div>
-     <h1>Video 2</h1>
-     <div class="album py-3">
-       <div class="row">
-         {% for v2 in content.detail2 %}
-          {% if v2.picture %}
-           <div class="col-md-2">
-             <div class="card mb-2 shadow-sm">
-               <img src="data:image/png;base64,{{v2.picture}}" class="card-img-top">
-               <div class="card-body">
-                 <h5>第{{v2.times}}次观看,{{v2.video_time}}s</h5>
-                 <button  class="btn  mb-2" onclick="de(2,{{v2.times}},{{v2.video_time}});"  type="button" name="button">delete</button>
-               </div>
-             </div>
-           </div>
-            {% endif %}
-        {% endfor %}
-
-       </div>
-     </div>
-   </div>
-
-</body>
 
 </html>

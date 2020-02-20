@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    {% load staticfiles %}
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'libs/bookstrap/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/video.css' %}" rel="stylesheet">
+    <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
+    <link rel="shortcut icon" href="{% static 'imgs/AI_32px.ico' %}" />
+</head>
+
+<body>
+   {% include "base/title.html" %}
+     <div>
+       <a href="/myadmin/list">返回</a>
+     </div>
+     <div >
+        {% for i in content.values %}
+        {{i}}
+        <figure class="figure">
+          <img src="{{i}}" class="figure-img img-fluid rounded" alt="...">
+          <figcaption class="figure-caption text-center">{{ forloop.counter }}</figcaption>
+        </figure>
+        {% endfor %}
+     </div>
+
+
+
+</body>
+
+<script type="text/javascript">
+
+
+</script>
+
+</html>
