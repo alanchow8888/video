@@ -1,20 +1,29 @@
 html,body {
   height: 100%;
 }
+.form{background: rgba(255,255,255,0.2);width:190%;height:47%;margin-left: 10%;border-top-left-radius: 0;border-top-right-radius: 0;}
 
+input[type="password"] {
+  margin-bottom: -1px;
+  padding-left:5px;
+  width:10px;
+}
+
+input[type="text"] {
+  margin-bottom: -1px;
+  padding-left:5px;
+  width:10px;
+}
 input[type="account"] {
   margin-bottom: -1px;
-  padding-left:36px;
-  width:300px;
+  padding-left:5px;
+  width:200px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
-input[type="password"] {
-  margin-bottom: -1px;
-  padding-left:36px;
-  width:300px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
+
+.fa{margin-top:3%;margin-left: 4%;width:28px;height: 9px;color: #ccc;}
+
+
 /*阴影*/
 .checkbox{padding-left:4%; font-weight: 600px;}

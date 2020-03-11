@@ -17,7 +17,7 @@
 
 </head>
 
-<body>
+<body oncopy="alert('对不起，禁止复制！');return false;">
   {% include "base/title.html" %}
   <div style="margin-left:50px;">
     <h3 style="margin-top:20px;">第二部分 观看视频并回答问题</h3>
@@ -37,8 +37,9 @@
          <h7>*请勿全屏观看此视频</h7>
        </div>
        <div style="width:250px;">
-         <button type="button" style="margin-left:0px;" class="btn btn-info mb-3" onclick="p3();">Finish</button>
+         <h7>*请勿拖动进度条</h7>
        </div>
+
    </div>
 
    <div class="p-2" style="margin-left:50px;">
@@ -49,7 +50,10 @@
               <source style=" background:#000;" src="{% static '/media/v2.mp4'%}"  type="video/mp4">
               <p class="vjs-no-js"> To view this video please enable JavaScript, and consider upgrading to a web browser</p>
            </video>
-       </div>
+         </div>
+         <div>
+            <a id="qn"></a>
+         </div>
      </div>
    </div>
 
@@ -67,7 +71,7 @@ function p3(){
    window.location.href="/video/part3";
 }
 //<source src="http://1257273252.vod2.myqcloud.com/cc6d9a86vodcq1257273252/5d2b40f55285890794396832134/CSbIIqDpZEwA.mp4"  type="video/mp4">
-//<source src="https://www.billarts.club/static/media/1.ogg"  type="video/ogg">
+//<source src="https://www.billarts.club/static/media/1.ogg"  type="video/ogg">{% static '/media/v2.mp4'%}
 function getUserMedia(constraints, success, error) {
   if (navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);
@@ -105,9 +109,11 @@ let context_1 = canvas_1.getContext('2d');
 let flag_1 = 0;
 let flag_2 = 0;
 let flag_3 = 0;
-let flag_all = 0;
 let sym = 0;
 let timeDisplay = 0;
+let answer_flag = 0 ;
+var question_number = document.getElementById("qn");
+question_number.innerHTML="共10题，还剩10题"
 
 function answer(question,answer){
   var answerdata = {question_id:question,answer:answer,video_times:video_times};
@@ -122,11 +128,7 @@ function answer(question,answer){
           },
       });
   Swal.close();
-  flag_all=1;
-  v.removeEventListener("play",playvideo);
-  v.addEventListener("play",playvideo);
-  v.play();
-
+  answer_flag=1
 }
 
 var d=60;
@@ -181,16 +183,24 @@ function playvideo(){
                   },
               });
 
-          if(v.paused && timeDisplay!=54 && timeDisplay!=137 && timeDisplay!=188 && timeDisplay!=270 && timeDisplay!=355 && timeDisplay!=429 && timeDisplay!=493 && timeDisplay!=535 && timeDisplay!=608 && timeDisplay!=662){//|| v.paused
-            v.removeEventListener("play",playvideo);
+          if (answer_flag==1){
+            answer_flag=0
             clearInterval(i);
+            v.removeEventListener("play",playvideo);
+            v.addEventListener("play",playvideo);
+            v.play();
+          }
+
+          if(v.paused && timeDisplay!=54 && timeDisplay!=137 && timeDisplay!=188 && timeDisplay!=270 && timeDisplay!=355 && timeDisplay!=429 && timeDisplay!=493 && timeDisplay!=535 && timeDisplay!=608 && timeDisplay!=662){//|| v.paused
+            clearInterval(i);
+            v.removeEventListener("play",playvideo);
             v.addEventListener("play",playvideo);
           }
 
           if(v.ended)
           {
-            v.removeEventListener("play",playvideo);
             clearInterval(i);
+            v.removeEventListener("play",playvideo);
             v.addEventListener("play",playvideo);
             window.location.href="/video/part3";
           }
@@ -229,7 +239,7 @@ function playvideo(){
 
 
 
-          if(timeDisplay == 54 && flag_1 == 0){
+          if(timeDisplay == 2 && flag_1 == 0){
             v.pause();
             flag_1 = 1;
             content =
@@ -253,7 +263,7 @@ function playvideo(){
                 allowOutsideClick :false,
             })
             test();
-
+            question_number.innerHTML="共10题，还剩9题"
           }
 
 
@@ -279,6 +289,7 @@ function playvideo(){
                 allowOutsideClick :false,
             })
             test();
+            question_number.innerHTML="共10题，还剩8题"
           }
 
 
@@ -306,6 +317,7 @@ function playvideo(){
                 allowOutsideClick :false,
             })
             test();
+            question_number.innerHTML="共10题，还剩7题"
           }
 
 
@@ -333,6 +345,7 @@ function playvideo(){
                 allowOutsideClick :false,
             })
             test();
+            question_number.innerHTML="共10题，还剩6题"
           }
 
           if(timeDisplay == 355 && flag_5 == 0){
@@ -358,6 +371,7 @@ function playvideo(){
                 allowOutsideClick :false,
             })
             test();
+            question_number.innerHTML="共10题，还剩5题"
           }
 
 
@@ -385,6 +399,7 @@ function playvideo(){
                 allowOutsideClick :false,
             })
             test();
+            question_number.innerHTML="共10题，还剩4题"
           }
 
 
@@ -410,6 +425,7 @@ function playvideo(){
                 allowOutsideClick :false,
             })
             test();
+            question_number.innerHTML="共10题，还剩3题"
           }
 
 
@@ -435,6 +451,7 @@ function playvideo(){
                 allowOutsideClick :false,
             })
             test();
+            question_number.innerHTML="共10题，还剩2题"
           }
 
 
@@ -463,6 +480,7 @@ function playvideo(){
                 allowOutsideClick :false,
             })
             test();
+            question_number.innerHTML="共10题，还剩1题"
           }
 
           if(timeDisplay == 662 && flag_10 == 0){
@@ -487,6 +505,7 @@ function playvideo(){
                 allowOutsideClick :false,
             })
             test();
+            question_number.innerHTML="共10题，还剩0题"
           }
 
 

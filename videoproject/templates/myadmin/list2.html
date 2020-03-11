@@ -16,9 +16,15 @@
      <div>
        <a href="/myadmin/list">返回</a>
      </div>
+
+     <div>
+      {% for i in answer %}
+        <a>{{i}}</a><br/>
+      {% endfor %}
+    </div>
+
      <div >
-        {% for i in content.values %}
-        {{i}}
+        {% for i in content %}
         <figure class="figure">
           <img src="{{i}}" class="figure-img img-fluid rounded" alt="...">
           <figcaption class="figure-caption text-center">{{ forloop.counter }}</figcaption>

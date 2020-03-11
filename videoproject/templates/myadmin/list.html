@@ -18,7 +18,7 @@
       <a>用户名：</a>
       <select id="user">
         {% for i in content.filelist %}
-        <option><a>{{i}}</a></option>
+          <option><a>{{i}}</a></option>
         {% endfor %}
       </select>
       <input style="padding:0px 20px;" class=" ui teal  button" type="button" value="查询" onclick="query1()">
@@ -49,7 +49,9 @@
             success: function (data) {
               var jsonData = JSON.parse(data);
               for (i in jsonData.data) {
-                x += "<a href='/myadmin/query_result/"+username+'/'+jsonData.data[i] +"/'"+" style='margin-left:10px'>第"+jsonData.data[i] + "次观看</a><br>";
+                x += "<a href='/myadmin/query_result/"+username+'/'+jsonData.data[i] +"/'"+" style='margin-left:10px'>第"
+                +jsonData.data[i] +"次观看(图片数量:"+jsonData.size[i]+"-大小:"+jsonData.size2[i]+"MB-"
+                +"测试时间:"+jsonData.create_time[i] +")</a><br>";
               }
               document.getElementById("demo").innerHTML = x;
             },

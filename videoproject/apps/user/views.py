@@ -21,9 +21,9 @@ def login(request):
             if user is not None:
                 response =  redirect('/video/part1')
                 if remember:
-                    response.set_cookie('username',username,max_age=1*24*3600)
+                    response.set_cookie('username',username,max_age=14*24*3600)
                 if rememberpsw:
-                    response.set_cookie('rememberpsw',password,max_age=1*24*3600)
+                    response.set_cookie('rememberpsw',password,max_age=14*24*3600)
                 auth_login(request, user)
                 return response
             else:

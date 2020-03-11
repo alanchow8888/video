@@ -10,4 +10,5 @@ urlpatterns = [
     path('record', record, name='record'),
     path('part<int:page_id>', partlist.as_view(), name='partlist'),
     path('calibration', calibration, name='calibration'),
+    path('stream_video', stream_video, name='stream_video'),
 ]
