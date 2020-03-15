@@ -161,7 +161,13 @@
     </section>
 
   </body>
+
   <script type="text/javascript">
+  $(function(){
+     $('body').bind('contextmenu', function() {
+      return false;
+          });
+  })
         $(".password").on("click", ".fa-eye-slash", function () {
           $(this).removeClass("fa-eye-slash").addClass("fa-eye");
           $(this).prev().attr("type", "text");

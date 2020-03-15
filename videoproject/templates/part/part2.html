@@ -65,7 +65,11 @@
 
 
 <script type="text/javascript">
-
+$(function(){
+   $('body').bind('contextmenu', function() {
+    return false;
+        });
+})
 
 function p3(){
    window.location.href="/video/part3";
@@ -239,7 +243,7 @@ function playvideo(){
 
 
 
-          if(timeDisplay == 2 && flag_1 == 0){
+          if(timeDisplay == 54 && flag_1 == 0){
             v.pause();
             flag_1 = 1;
             content =
